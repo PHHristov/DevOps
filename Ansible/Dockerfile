@@ -7,7 +7,8 @@ apt-get upgrade -y
 
 # Installing sudo to emulate normal OS behavior               
 RUN apt-get install  sudo                                                      && \
-apt-get install net-tools
+apt-get install net-tools                                                      && \
+apt-get install inetutils-ping    
 # Install python
 RUN apt-get install python3.6 -y
 
