@@ -23,12 +23,11 @@ apt-get install ansible -y
 RUN export 'HTTP_PROXY=http:\\phristov:password@proxy.visteon.com:80'     && \
 export 'HTTPS_PROXY=http:\\phristov:password@proxy.visteon.com :80'       
 
+#installing tools
+RUN apt-get install vim -y
+
 #Export Ansible files
-<<<<<<< HEAD
+
 COPY ./Inventory/groups /home
 COPY ./Inventory/ansible.cfg /home
 COPY ./Inventory/hostname.yml /home
-=======
-COPY ./Inventory/groups /home                                             
-COPY ./Inventory/ansible.cfg /home
->>>>>>> 66d9da21ab098e3e3364c07bfca8ea6905ff8f13
