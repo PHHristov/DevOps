@@ -26,3 +26,4 @@ export 'HTTPS_PROXY=http:\\phristov:password@proxy.visteon.com :80'
 #Export Ansible files
 COPY ./Inventory/groups /home
 COPY ./Inventory/ansible.cfg /home
+COPY ./Inventory/hostname.yml /home
