@@ -1,0 +1,12 @@
+---
+    - hosts: webserver
+      become: yes
+      tasks: 
+        - name: install web server application
+          apt: name{{item}} state=latest update_cache=yes
+          with_items:
+              - apache2
+              - libapache2-mod-wsgi
+              - python pip
+              - python-virtualenv
+         

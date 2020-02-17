@@ -33,4 +33,5 @@ COPY ./ansible.cfg /home
 COPY ./hostname.yml /home
 COPY ./slaves/loadbalancer.yml /home
 COPY ./slaves/database.yml /home
-
+COPY ./slaves/webserver.yml /home
+COPY ./control.yml /home

@@ -4,3 +4,6 @@
       tasks: 
         - name: install nginx
           apt: name=nginx state=latest update_cache=yes
+        
+        - name: ensure loadbalancer is started
+          service: name=nginx state=started enabled=yes
