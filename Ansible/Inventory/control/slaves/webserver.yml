@@ -6,7 +6,19 @@
           apt: name{{item}} state=latest update_cache=yes
           with_items:
               - apache2
+              - wsgi
               - libapache2-mod-wsgi
+              - apache2ctl
+              - apachctl
               - python pip
               - python-virtualenv
          
+              
+        #- name: ensure apache_wsgi is running
+        #  apache2_module: state=present name=wsgi
+        #  notify: restart apache2
+
+
+      handlers:
+        - name: restart apache2
+          service: name=apache2 state=restarted

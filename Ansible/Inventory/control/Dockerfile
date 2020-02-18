@@ -5,6 +5,8 @@ FROM ubuntu:latest
 RUN apt-get update -y                                                          && \
 apt-get upgrade -y                                                         
 
+
+
 # Installing tools to emulate normal OS behavior               
 RUN apt-get install  sudo                                                      && \
 apt-get install net-tools                                                      && \
@@ -35,3 +37,16 @@ COPY ./slaves/loadbalancer.yml /home
 COPY ./slaves/database.yml /home
 COPY ./slaves/webserver.yml /home
 COPY ./control.yml /home
+COPY ./restart_service.yml /home
+
+#RUN playbooks
+RUN cd /home                                              && \
+ansible-playbook database.yml                                              && \
+ansible-playbook loadbalancer.yml                                          
+
+#FIND AN ANSIBLE WAY TO INSTAL APACHE2CTL !!!!!
+RUN apt-get install apache2 -y
+
+RUN cd /home                                              && \
+ansible-playbook webserver.yml                                             
+
