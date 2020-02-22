@@ -14,3 +14,10 @@ apt-get install vim -y
 # Export proxy 
 RUN export 'HTTP_PROXY=http:\\phristov:password@proxy.visteon.com:80'     && \
 export 'HTTPS_PROXY=http:\\phristov:password@proxy.visteon.com :80'       
+
+#start ssh
+RUN mkdir /var/run/sshd                                                        && \
+chmod 0755 /var/run/sshd                                                       && \
+/usr/sbin/sshd                                                                 && \
+useradd papimaster
+
