@@ -14,9 +14,9 @@
               - python-virtualenv
          
               
-        #- name: ensure apache_wsgi is running
-        #  apache2_module: state=present name=wsgi
-        #  notify: restart apache2
+        - name: ensure apache_wsgi is running
+          apache2_module: name=wsgi state=present 
+          notify: restart apache2
 
 
       handlers:
