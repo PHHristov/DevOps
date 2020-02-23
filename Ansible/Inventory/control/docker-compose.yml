@@ -1,0 +1,20 @@
+version: '3'
+services:
+  control:
+    image: control
+    build: .
+    networks:
+     - sshtest
+    ports:
+     - "2201:22"
+ 
+  webserver:
+    image: apache2
+    build: ./slaves
+    networks:
+     - sshtest
+    ports:
+     - "2202:22"
+ 
+networks:
+ sshtest:
