@@ -21,3 +21,4 @@ chmod 0755 /var/run/sshd                                                       &
 /usr/sbin/sshd                                                                 && \
 useradd papimaster
 
+EXPOSE 22

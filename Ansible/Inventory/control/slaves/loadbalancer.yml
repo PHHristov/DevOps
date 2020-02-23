@@ -7,3 +7,19 @@
         
         - name: ensure loadbalancer is started
           service: name=nginx state=started enabled=yes
+
+        - name: copy config to loadbalancer
+          template: src=/home/nginx.conf.j2 dest=/etc/nginx/sites-available/demo mode=0755
+          notify: restart nginx
+
+        - name: deactivate default nginx sites
+          file: path=/etc/nginx/sites-available/default state=absent
+          notify: restart nginx
+
+        - name: activate nginx site
+          file: src=/etc/nginx/sites-available/demo dest=/etc/nginx/sites-enabled/demo state=link
+         
+        
+      handlers:
+        - name: restart nginx 
+          service: state=started name=nginx 

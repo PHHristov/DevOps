@@ -4,3 +4,10 @@
       tasks:
         - name: install mysql server
           apt: name=mysql-server state=latest update_cache=yes
+        - name: change ip address in mysql conf
+          lineinfile: dest=/etc/mysql/my.cnf regexp=^bind-address line="bind-address = 0.0.0.0"
+          notify: restart mysql
+
+      handlers:
+        - name: restart mysql
+          service: name=mysql state=restarted

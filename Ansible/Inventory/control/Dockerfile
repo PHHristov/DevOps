@@ -21,7 +21,7 @@ apt-get install ansible -y
 # Ansible is installed  
 
 # Install python
-RUN apt-get install python3.6 -y                                               &&\
+RUN apt-get install python2.7 -y                                               &&\
 apt install python3-pip -y
 
 # Export proxy 
@@ -43,14 +43,9 @@ COPY ./hostname.yml /home
 COPY ./slaves/webserver.yml /home
 COPY ./slaves/loadbalancer.yml /home
 COPY ./slaves/database.yml /home
-
+COPY ./nginx.conf.j2 /home
 # Copy demo appllication
 COPY ./slaves/demo/ /home/demo
-
-RUN cd /home                                                                   &&\
-#ansible-playbook webserver.yml                                              
-#ansible-playbook database.yml                                                  &&\    
-#ansible-playbook loadbalancer.yml                                              &&\
 
 EXPOSE 80
 EXPOSE 22
@@ -61,3 +56,8 @@ chmod 0755 /var/run/sshd                                                       &
 /usr/sbin/sshd                                                                 && \
 useradd papimaster
 
+
+RUN cd /home                                                                   &&\
+ansible-playbook database.yml                                              
+#ansible-playbook database.yml                                                  &&\    
+#ansible-playbook loadbalancer.yml                                              &&\
