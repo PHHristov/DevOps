@@ -1,35 +1,33 @@
-version: "3.2"
+version: '3.2'
 services:
   jenkins_master:
     build: jenkins_master
     expose:
-      - "8080"
+      - '8080'
     ports:
-      - "8080:8080"
-      - "5000:5000"
+      - '8080:8080'
+      - '5000:5000'
     networks:
       - rito_project_jenkins-net
-
     volumes:
-      - type: volume 
+      - type: volume
         source: jenkins-log
-        target: "/var/log/jenkins"
+        target: /var/log/jenkins
       - type: volume
         source: jenkins-data
-        target: "/var/jenkins_home"
+        target: /var/jenkins_home
   nginx_proxy:
     build: ./jenkins_nginx
     expose:
-      - "80"
+      - '80'
     ports:
-      - "8070:80"
+      - '8070:80'
     networks:
       - rito_project_jenkins-net
-
-          
-volumes: 
+  jenkins-slave:
+    build: ./jenkins_slave
+volumes:
   jenkins-log:
   jenkins-data:
 networks:
   rito_project_jenkins-net:
-  
