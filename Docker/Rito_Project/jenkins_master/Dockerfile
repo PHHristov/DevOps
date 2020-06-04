@@ -10,5 +10,7 @@ RUN chown -R jenkins:jenkins /var/cache/jenkins
 USER jenkins
 COPY ./files/install-plugins.sh /usr/local/bin/install-plugins.sh
 COPY ./files/plugins.txt /tmp/plugins.txt
+COPY ./files/jenkins.sh /usr/local/bin/jenkins.sh
+COPY ./files/jenkins-support /usr/local/bin/jenkins-support
+COPY ./files/init.groovy /usr/local/bin/init.groovy
 RUN /usr/local/bin/install-plugins.sh < /tmp/plugins.txt
-

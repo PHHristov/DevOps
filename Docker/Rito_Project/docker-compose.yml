@@ -26,6 +26,8 @@ services:
       - rito_project_jenkins-net
   jenkins-slave:
     build: ./jenkins_slave
+    networks:
+      - rito_project_jenkins-net
 volumes:
   jenkins-log:
   jenkins-data:
