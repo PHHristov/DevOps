@@ -39,6 +39,15 @@ services:
       - --config.file=/etc/prometheus/prometheus.yml  
     networks:
       - rito_project_jenkins-net    
+  grafana:
+    build: ./grafana
+    expose:
+    - '3000'
+    ports:
+    - '3000:3000'
+    networks:
+    - rito_project_jenkins-net      
+
 volumes:
   jenkins-log:
   jenkins-data:
