@@ -61,3 +61,4 @@ RUN cd /home                                                                   &
 ansible-playbook database.yml                                              
 #ansible-playbook database.yml                                                  &&\    
 #ansible-playbook loadbalancer.yml                                              &&\
+ 
