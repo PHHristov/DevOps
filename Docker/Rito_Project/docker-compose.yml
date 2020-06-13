@@ -29,16 +29,28 @@ services:
     networks:
       - rito_project_jenkins-net
 
+  cadvisor:
+    build: ./cadvisor
+
   prometheus:
     build: ./prometheus
-    expose:
-      - '9090'
+    volumes:
+      - prometheus_data:/prometheus
     ports:
       - '9090:9090'
     command:
       - --config.file=/etc/prometheus/prometheus.yml  
+      - --storage.tsdb.path=/prometheus
+      - --web.console.libraries=/usr/share/prometheus/console_libraries
+      - --web.console.templates=/usr/share/prometheus/consoles
+    links:
+      - cadvisor
+    depends_on: 
+      - cadvisor
     networks:
       - rito_project_jenkins-net    
+  
+  
   grafana:
     build: ./grafana
     expose:
@@ -51,5 +63,6 @@ services:
 volumes:
   jenkins-log:
   jenkins-data:
+  prometheus_data:
 networks:
   rito_project_jenkins-net:
