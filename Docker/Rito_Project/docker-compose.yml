@@ -1,0 +1,55 @@
+version: '3.2'
+services:
+  jenkins_master:
+    build: jenkins_master
+    expose:
+      - '8080'
+    ports:
+      - '8080:8080'
+      - '5000:5000'
+    networks:
+      - rito_project_jenkins-net
+    volumes:
+      - type: volume
+        source: jenkins-log
+        target: /var/log/jenkins
+      - type: volume
+        source: jenkins-data
+        target: /var/jenkins_home
+  nginx_proxy:
+    build: ./jenkins_nginx
+    expose:
+      - '80'
+    ports:
+      - '8070:80'
+    networks:
+      - rito_project_jenkins-net
+  jenkins-slave:
+    build: ./jenkins_slave
+    networks:
+      - rito_project_jenkins-net
+
+  prometheus:
+    build: ./prometheus
+    expose:
+      - '9090'
+    ports:
+      - '9090:9090'
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml  
+    networks:
+      - rito_project_jenkins-net    
+  grafana:
+    build: ./grafana
+    expose:
+    - '3000'
+    ports:
+    - '3000:3000'
+    networks:
+    - rito_project_jenkins-net      
+
+volumes:
+  jenkins-log:
+  jenkins-data:
+networks:
+  rito_project_jenkins-net:
