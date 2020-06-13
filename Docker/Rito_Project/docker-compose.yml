@@ -45,6 +45,8 @@ services:
     build: ./prometheus
     volumes:
       - prometheus_data:/prometheus
+    dns:
+      - "8.8.8.8"
     ports:
       - '9090:9090'
     command:
@@ -63,6 +65,15 @@ services:
     build: ./grafana
     ports:
     - '3000:3000'
+    depends_on: 
+    - prometheus
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/files/:/etc/grafana/provisioning/
+    environment: 
+      - GF_SECURITY_ADMIN_PASSWORD=BABACECA
+      - GF_USERS_ALLOW_SIGN_UP=false
+
     networks:
     - rito_project_jenkins-net      
 
@@ -70,5 +81,6 @@ volumes:
   jenkins-log:
   jenkins-data:
   prometheus_data:
+  grafana_data:
 networks:
   rito_project_jenkins-net:
