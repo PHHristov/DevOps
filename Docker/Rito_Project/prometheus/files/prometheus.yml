@@ -31,4 +31,6 @@
           static_configs:
           - targets: ['jenkins_master:8080']
 
-        
+        - job_name: 'cadvisor'
+          static_configs:
+          - targets: ['cadvisor:8080']
