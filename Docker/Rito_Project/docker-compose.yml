@@ -2,8 +2,6 @@ version: '3.2'
 services:
   jenkins_master:
     build: jenkins_master
-    expose:
-      - '8080'
     ports:
       - '8080:8080'
       - '5000:5000'
@@ -29,27 +27,58 @@ services:
     networks:
       - rito_project_jenkins-net
 
+  cadvisor:
+    build: ./cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    ports:
+      - '8069:8080'
+    networks:
+      - rito_project_jenkins-net    
+
   prometheus:
     build: ./prometheus
-    expose:
-      - '9090'
+    volumes:
+      - prometheus_data:/prometheus
+    dns:
+      - "8.8.8.8"
     ports:
       - '9090:9090'
     command:
       - --config.file=/etc/prometheus/prometheus.yml  
+      - --storage.tsdb.path=/prometheus
+      - --web.console.libraries=/usr/share/prometheus/console_libraries
+      - --web.console.templates=/usr/share/prometheus/consoles
+    
+    depends_on: 
+      - cadvisor
     networks:
       - rito_project_jenkins-net    
+  
+  
   grafana:
     build: ./grafana
-    expose:
-    - '3000'
     ports:
     - '3000:3000'
+    depends_on: 
+    - prometheus
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/files/:/etc/grafana/provisioning/
+    environment: 
+      - GF_SECURITY_ADMIN_PASSWORD=BABACECA
+      - GF_USERS_ALLOW_SIGN_UP=false
+
     networks:
     - rito_project_jenkins-net      
 
 volumes:
   jenkins-log:
   jenkins-data:
+  prometheus_data:
+  grafana_data:
 networks:
   rito_project_jenkins-net:
