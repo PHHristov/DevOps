@@ -3,6 +3,20 @@ variable AWS_REGION{
     default = "eu-west-1"
 }
 
+variable "instance_username"{
+    type = string
+    default = "ubuntu"
+}
+
+variable "PATH_TO_PUBLIC_KEY"{
+    type = string
+    default = "./files/mykey"
+}
+
+variable "PATH_TO_PRIVATE_KEY"{
+    default = "./files/mykey.pem"
+}
+
 variable AMIS{
     type = map(string)
     default = {                                ## check the current AMIs from https://cloud-images.ubuntu.com/locator/ec2/
