@@ -17,8 +17,17 @@ resource "aws_instance" "web"{
         Name                      = "olala_danette"
     }
     provisioner "file" {
-    source                        = "./files/test"
-    destination                   = "/var/tmp/test"
+    source                        = "./files/update.sh"
+    destination                   = "/var/tmp/update.sh"
+    }
+  
+    provisioner "remote-exec" {
+        inline = [
+            "chmod +x /var/tmp/update.sh",
+            "chmod -R +x /var/tmp/Rito_project",
+            "sudo /var/tmp/update.sh"
+            
+        ]
     }
     connection {
         host                      = coalesce(self.public_ip, self.private_ip)
@@ -29,5 +38,8 @@ resource "aws_instance" "web"{
 
 }
 
+output "ip" {
+        value = aws_instance.web.public_ip
+    }
 
 
