@@ -9,13 +9,21 @@ resource "aws_key_pair" "mykey" {
 }
 
 resource "aws_instance" "web" {
-  ami           = var.AMIS[var.AWS_REGION]
-  instance_type = "t2.micro"
-  key_name      = aws_key_pair.mykey.key_name
+  ami                         = var.AMIS[var.AWS_REGION]
+  instance_type               = "t2.micro"
+  key_name                    = aws_key_pair.mykey.key_name
+  associate_public_ip_address = true
+  ## VPC Subnet 
+  subnet_id = aws_subnet.main-public-1.id
+  ## Security Groups
+  vpc_security_group_ids = [aws_security_group.allow_ssh.id]
+
+
 
   tags = {
     Name = "olala_danette"
   }
+
   provisioner "file" {
     source      = "./files/update.sh"
     destination = "/var/tmp/update.sh"
@@ -23,9 +31,8 @@ resource "aws_instance" "web" {
 
   provisioner "remote-exec" {
     inline = [
-      "chmod +x /var/tmp/update.sh",
-      "chmod -R +x /var/tmp/Rito_project",
-      "sudo /var/tmp/update.sh"
+      "chmod +x /var/tmp/update.sh" #,
+      #"sudo /var/tmp/update.sh"
 
     ]
   }
