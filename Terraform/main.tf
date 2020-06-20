@@ -18,7 +18,7 @@ resource "aws_instance" "web" {
   ## Security Groups
   vpc_security_group_ids = [aws_security_group.allow_ssh.id]
 
-
+  user_data = "sudo apt-get update -y \n sudo apt install software-properties-common -y \n sudo apt-add-repository --yes --update ppa:ansible/ansible \n sudo apt install ansible -y \n apt-get install git-core"
 
   tags = {
     Name = "olala_danette"
@@ -28,11 +28,11 @@ resource "aws_instance" "web" {
     source      = "./files/update.sh"
     destination = "/var/tmp/update.sh"
   }
-
+  
   provisioner "remote-exec" {
     inline = [
-      "chmod +x /var/tmp/update.sh" #,
-      #"sudo /var/tmp/update.sh"
+      "cd /usr/src/",
+      "sudo git clone https://github.com/PHHristov/DevOps.git"
 
     ]
   }
