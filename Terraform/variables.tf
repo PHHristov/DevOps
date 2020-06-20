@@ -1,33 +1,33 @@
-variable AWS_REGION{
-    type = string
-    default = "eu-west-1"
+variable AWS_REGION {
+  type    = string
+  default = "eu-west-1"
 }
 
-variable "instance_username"{
-    type = string
-    default = "ubuntu"
+variable "instance_username" {
+  type    = string
+  default = "ubuntu"
 }
 
-variable "PATH_TO_PUBLIC_KEY"{
-    type = string
-    default = "./files/mykey"
+variable "PATH_TO_PUBLIC_KEY" {
+  type    = string
+  default = "./files/mykey"
 }
 
-variable "PATH_TO_PRIVATE_KEY"{
-    default = "./files/mykey.pem"
+variable "PATH_TO_PRIVATE_KEY" {
+  default = "./files/mykey.pem"
 }
 
-variable AMIS{
-    type = map(string)
-    default = {                                ## check the current AMIs from https://cloud-images.ubuntu.com/locator/ec2/
-        eu-west-1 = "ami-008320af74136c628"
-        eu-west-2 = "ami-004c1e61ae5d76090"
-        us-west-1 = "ami-0a4df59262c92cf19"
-    }
+variable AMIS {
+  type = map(string)
+  default = { ## check the current AMIs from https://cloud-images.ubuntu.com/locator/ec2/
+    eu-west-1 = "ami-008320af74136c628"
+    eu-west-2 = "ami-004c1e61ae5d76090"
+    us-west-1 = "ami-0a4df59262c92cf19"
+  }
 }
 
 variable "PROFILE" {
-    type = string
-    default = "default"
-    description = "i have preinstalled AWSCLI and configured the default profile, so from now on we do not need to keep aws secret and access keys, hopefully"
+  type        = string
+  default     = "default"
+  description = "i have preinstalled AWSCLI and configured the default profile, so from now on we do not need to keep aws secret and access keys, hopefully"
 }

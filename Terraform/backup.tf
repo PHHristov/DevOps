@@ -1,5 +1,5 @@
 terraform {
-    backend "s3" {
-        bucket = "terraform-bucket-69"
-    }
+  backend "s3" {
+    bucket = "terraform-bucket-69"
+  }
 }
