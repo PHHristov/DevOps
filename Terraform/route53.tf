@@ -4,19 +4,19 @@
 # 
 # resource "aws_route53_record" "server1-record" {
 #     zone_id = aws_route53_zone.xn--53-hmcm3b-com.zone_id
-#     name = "server1.xn--53-hmcm3b.com.com"
+#     name = "server1.xn--53-hmcm3b.com"
 #     type = "A"
 #     ttl = "300"
-#     records = ["3.127.65.207"]
+#     records = [aws_instance.web.public_ip]
 #   
 # }
 # 
 # resource "aws_route53_record" "www-record" {
 #     zone_id = aws_route53_zone.xn--53-hmcm3b-com.zone_id
-#     name = "www.xn--53-hmcm3b.com.com"
+#     name = "www.xn--53-hmcm3b.com"
 #     type = "A"
 #     ttl = "300"
-#     records = ["3.127.65.207"]
+#     records = [aws_instance.web.public_ip]
 #   
 # }
 # 
