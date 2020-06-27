@@ -3,13 +3,33 @@ resource "aws_iam_group" "GodMode_On" {
   name = "GodMode_On"
 }
 
+resource "aws_iam_policy" "admin_policy"{
+  name = "admins"
+  description = "Gives access to everything, everywhere."
+  
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "*"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
+
 # Attach policy to the group
 resource "aws_iam_policy_attachment" "Gods_attach" {
   name = "Gods_attach"
   groups = [
     aws_iam_group.GodMode_On.name
   ]
-  policy_arn = "arn:aws:iam:aws:policy/AdministratorAccess"
+  policy_arn = aws_iam_policy.admin_policy.arn
 }
 
 #Create users
