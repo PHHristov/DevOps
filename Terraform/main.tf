@@ -28,14 +28,18 @@ resource "aws_instance" "web" {
     source      = "./files/update.sh"
     destination = "/var/tmp/update.sh"
   }
-  
+
   provisioner "remote-exec" {
     inline = [
+      "sudo chmod +x /var/tmp/update.sh",
+      "sudo /var/tmp/update.sh",
       "cd /usr/src/",
       "sudo git clone https://github.com/PHHristov/DevOps.git"
 
     ]
   }
+
+
   connection {
     host        = coalesce(self.public_ip, self.private_ip)
     user        = var.instance_username
@@ -45,8 +49,27 @@ resource "aws_instance" "web" {
 
 }
 
+resource "aws_ebs_volume" "ebs-volume-1" {
+  availability_zone = "eu-west-1a"
+  size              = "20"
+  type              = "gp2"
+  tags = {
+    Name = "persistant ebs volume"
+  }
+}
+
+resource "aws_volume_attachment" "ebs-volume-attachment-1" {
+  device_name = "/dev/xvdh"
+  volume_id   = aws_ebs_volume.ebs-volume-1.id
+  instance_id = aws_instance.web.id
+}
+
 output "ip" {
   value = aws_instance.web.public_ip
 }
+
+
+
+
 
 
