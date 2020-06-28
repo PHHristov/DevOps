@@ -20,7 +20,7 @@ docker build -t $jenkins_master_repo_url:$1 ./Rito_project/jenkins_master
 docker build -t $jenkins_slave_repo_url:$1 ./Rito_project/jenkins_slave
 docker build -t $node_exporter_repo_url:$1 ./Rito_project/node_exporter
 docker build -t $prometheus_repo_url:$1 ./Rito_project/prometheus
-docker build -t $jenkins_nginx_repo_url:$1 ./Rito_project/jenkins_nginx
+# docker build -t $jenkins_nginx_repo_url:$1 ./Rito_project/jenkins_nginx
 
 docker push $cadvisor
 docker push $grafana_repo_url
@@ -28,5 +28,5 @@ docker push $jenkins_master_repo_url
 docker push $jenkins_slave_repo_url
 docker push $node_exporter_repo_url
 docker push $prometheus_repo_url
-docker push $jenkins_nginx_repo_url
+# docker push $jenkins_nginx_repo_url
 
