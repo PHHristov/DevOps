@@ -14,19 +14,6 @@ services:
       - type: volume
         source: jenkins-data
         target: /var/jenkins_home
-  nginx_proxy:
-    build: ./jenkins_nginx
-    expose:
-      - '80'
-    ports:
-      - '8070:80'
-    networks:
-      - rito_project_jenkins-net
-  jenkins-slave:
-    build: ./jenkins_slave
-    networks:
-      - rito_project_jenkins-net
-
   node_exporter:
     build: ./node_exporter
     ports:
