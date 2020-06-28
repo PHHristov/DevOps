@@ -24,25 +24,15 @@
 
     - name: Update apt and install docker-ce
       apt: update_cache=yes name=docker-ce state=latest   
-    
-    - name: return motd to registered var
-      command: curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose \n apt install docker-compose
-  
-
+     
     - name : Update and install git
       apt: update_cache=yes name=git-core state=latest
-
-    - name: Change docker compose ownership and permissions
-      file:
-        path: /usr/local/bin/docker-compose
-        owner: ubuntu
-        mode: '0007'
-    
-            
+      
     - name: Recursively change ownership of Jenkins master files
       file:
         path: /usr/src/DevOps/Docker/Rito_Project/jenkins_master/files/
         state: directory
         recurse: yes
         owner: ubuntu
+        mode: '0007'
       
