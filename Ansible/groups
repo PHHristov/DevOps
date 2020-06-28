@@ -1,3 +1,3 @@
 [webserver]
-app01 ansible_connection=local
+ws ansible_connection=local
 
