@@ -16,9 +16,15 @@ resource "aws_instance" "web" {
   ## VPC Subnet 
   subnet_id = aws_subnet.main-public-1.id
   ## Security Groups
-  vpc_security_group_ids = [aws_security_group.allow_ssh.id]
+  vpc_security_group_ids = [aws_security_group.allow_ssh.id,
+                            aws_security_group.allow_jenkins.id,
+                            aws_security_group.allow_grafana.id,
+                            aws_security_group.allow_prometheus.id,
+                            aws_security_group.allow_cadvisor.id,
+                            aws_security_group.allow_node_exporter.id,
+                            ]
 
-  user_data = "sudo apt-get update -y \n sudo apt install software-properties-common -y \n sudo apt-add-repository --yes --update ppa:ansible/ansible \n sudo apt install ansible -y \n apt-get install git-core"
+  user_data = "sudo apt-get update -y \n apt-get install git-core"
 
   tags = {
     Name = "olala_danette"
@@ -29,10 +35,19 @@ resource "aws_instance" "web" {
     destination = "/var/tmp/update.sh"
   }
 
+  provisioner "file" {
+    source      = "./files/ebsfs.sh"
+    destination = "/var/tmp/ebsfs.sh"
+  }
+
   provisioner "remote-exec" {
     inline = [
       "sudo chmod +x /var/tmp/update.sh",
+      "sudo chmod +x /var/tmp/ebsfs.sh",
+      "sleep 4",
       "sudo /var/tmp/update.sh",
+      "sleep 4",
+      "sudo /var/tmp/ebsfs.sh",
       "cd /usr/src/",
       "sudo git clone https://github.com/PHHristov/DevOps.git"
 
