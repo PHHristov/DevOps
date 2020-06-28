@@ -1,3 +1,0 @@
-Go to the link, create a Ansible script that creates a vm (on aws if possible), downloads the script and executes it, which makes the vm a JFrog repo. I have to get a key tho...
-
-https://jfrog.com/screencast/artifactory-5-one-minute-setup-docker-registry-as-container-install/
