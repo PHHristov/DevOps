@@ -10,7 +10,7 @@
 
     - name: Install required system packages
       apt: name={{ item }} state=latest update_cache=yes
-      loop: [ 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools']
+      loop: [ 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools', 'python-apt']
 
     - name: Add Docker GPG apt Key
       apt_key:
@@ -25,8 +25,9 @@
     - name: Update apt and install docker-ce
       apt: update_cache=yes name=docker-ce state=latest   
     
-    - name: Update apt and install docker-compose 
-      apt: update_cache=yes name=docker-compose state=latest
+    - name: return motd to registered var
+      command: curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose \n apt install docker-compose
+  
 
     - name : Update and install git
       apt: update_cache=yes name=git-core state=latest
