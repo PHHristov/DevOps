@@ -8,6 +8,7 @@ resource "aws_key_pair" "mykey" {
   public_key = file(var.PATH_TO_PUBLIC_KEY)
 }
 
+
 resource "aws_instance" "web" {
   ami                         = var.AMIS[var.AWS_REGION]
   instance_type               = "t2.micro"
@@ -42,15 +43,19 @@ resource "aws_instance" "web" {
 
   provisioner "remote-exec" {
     inline = [
-      "sudo chmod +x /var/tmp/update.sh",
-      "sudo chmod +x /var/tmp/ebsfs.sh",
-      "sleep 4",
-      "sudo /var/tmp/update.sh",
-      "sleep 4",
-      "sudo /var/tmp/ebsfs.sh",
       "cd /usr/src/",
-      "sudo git clone https://github.com/PHHristov/DevOps.git"
-
+      "sudo git clone https://github.com/PHHristov/DevOps.git",
+      "sleep 5",
+      "sudo chmod -R +x /usr/src/*",
+      "cd /usr/src/DevOps/Terraform/files",
+      "sudo ./update.sh",
+      #"sleep 5",
+      #"sudo ./ebsfs.sh",
+      "sleep 5",
+      "cd /usr/src/DevOps/Ansible",
+      "ansible-playbook master.yml",
+      "cd /usr/src/DevOps/Docker/Rito_Project/",
+      "sudo docker-compose up -d"
     ]
   }
 
@@ -63,6 +68,7 @@ resource "aws_instance" "web" {
   }
 
 }
+
 
 resource "aws_ebs_volume" "ebs-volume-1" {
   availability_zone = "eu-west-1a"

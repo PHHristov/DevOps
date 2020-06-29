@@ -3,10 +3,10 @@ resource "aws_iam_group" "GodMode_On" {
   name = "GodMode_On"
 }
 
-resource "aws_iam_policy" "admin_policy"{
-  name = "admins"
+resource "aws_iam_policy" "admin_policy" {
+  name        = "admins"
   description = "Gives access to everything, everywhere."
-  
+
   policy = <<EOF
 {
   "Version": "2012-10-17",
