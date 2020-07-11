@@ -1,7 +1,5 @@
-## Install Docker ############################################################
-
 ---
-- hosts: web
+- hosts: Kube
   become: true
 
   tasks:
@@ -10,7 +8,7 @@
 
     - name: Install required system packages
       apt: name={{ item }} state=latest update_cache=yes
-      loop: [ 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools', 'python-apt']
+      loop: [ 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools', 'python-apt', 'linuxbrew-wrapper', 'conntrack', 'gnupg2']
 
     - name: Add Docker GPG apt Key
       apt_key:
@@ -36,3 +34,19 @@
         owner: ubuntu
         mode: '0007'
       
+    - name: download-minikube
+      get_url:
+        url: https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+        dest: /usr/local/bin
+        mode: 0007
+
+    - name: setup minikube
+      copy:
+        src: /usr/src/DevOps/Ansible/dockerDaemon.cfg
+        dest: /etc/docker/daemon.json
+      
+    - name: Create systemd directory for docker
+      file:
+        path: /etc/systemd/system/docker.service.d
+        state: directory
+        mode: '0755'
