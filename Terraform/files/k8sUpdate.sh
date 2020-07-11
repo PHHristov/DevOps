@@ -10,3 +10,7 @@ curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.16.8/2020-04-16/
 sudo mkdir -p /usr/local/bin/
 sudo install minikube /usr/local/bin/
 systemctl enable kubelet.service
+
+curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.16.8/2020-04-16/bin/linux/amd64/kubectl
+chmod +x ./kubectl
+sudo mv ./kubectl /usr/local/bin/kubectl
