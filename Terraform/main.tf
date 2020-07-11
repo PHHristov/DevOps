@@ -8,6 +8,9 @@ resource "aws_key_pair" "mykey" {
   public_key = file(var.PATH_TO_PUBLIC_KEY)
 }
 
+###########################################################################
+## Jenkins MASTER #########################################################
+###########################################################################
 
 resource "aws_instance" "web" {
   ami                         = var.AMIS[var.AWS_REGION]
@@ -48,6 +51,7 @@ resource "aws_instance" "web" {
       "sleep 5",
       "sudo chmod -R +x /usr/src/*",
       "cd /usr/src/DevOps/Terraform/files",
+      "sleep 5",
       "sudo ./update.sh",
       #"sleep 5",
       #"sudo ./ebsfs.sh",
@@ -70,6 +74,11 @@ resource "aws_instance" "web" {
 }
 
 
+
+###########################################################################
+## EBS Volume #############################################################
+###########################################################################
+
 resource "aws_ebs_volume" "ebs-volume-1" {
   availability_zone = "eu-west-1a"
   size              = "20"
@@ -84,6 +93,11 @@ resource "aws_volume_attachment" "ebs-volume-attachment-1" {
   volume_id   = aws_ebs_volume.ebs-volume-1.id
   instance_id = aws_instance.web.id
 }
+
+###########################################################################
+## Output #############################################################
+###########################################################################
+
 
 output "ip" {
   value = aws_instance.web.public_ip
