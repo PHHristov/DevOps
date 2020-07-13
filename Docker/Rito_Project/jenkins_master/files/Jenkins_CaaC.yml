@@ -1,73 +1,105 @@
---- 
-    jenkins: 
-      agentProtocols: 
-        - JNLP4-connect
-        - Ping
-      clouds: 
-        - 
-          docker: 
-            dockerApi: 
-              connectTimeout: 60
-              dockerHost: 
-                uri: "tcp://docker.for.win.localhost:2375"
-              readTimeout: 60
-            name: LocalDockerHost
-            templates: 
-              - 
-                connector: attach
-                dockerTemplateBase: 
-                  image: rito_project_jenkins-slave
-                labelString: testslave
-                mode: EXCLUSIVE
-                name: testslave
-                pullStrategy: PULL_NEVER
-                pullTimeout: 300
-                remoteFs: /home/jenkins
-      crumbIssuer: 
-        standard: 
-          excludeClientIPFromCrumb: false
-      disableRememberMe: false
-      labelAtoms: 
-        - 
-          name: master
-        - 
-          name: testslave
-      markupFormatter: plainText
-      mode: NORMAL
-      myViewsTabBar: standard
-      numExecutors: 2
-      primaryView: 
-        all: 
-          name: all
-      projectNamingStrategy: standard
-      quietPeriod: 5
-      remotingSecurity: 
-        enabled: false
-      scmCheckoutRetryCount: 0
-      slaveAgentPort: 50000
-      updateCenter: 
-        sites: 
-          - 
-            id: default
-            url: "https://updates.jenkins.io/update-center.json"
-      views: 
-        - 
-          all: 
-            name: all
-      viewsTabBar: standard
-    security: 
-      apiToken: 
-        creationOfLegacyTokenEnabled: false
-        tokenGenerationOnCreationEnabled: false
-        usageStatisticsEnabled: true
-      sSHD: 
-        port: -1
-    unclassified: 
-      buildDiscarders: 
-        configuredBuildDiscarders: 
-          - jobBuildDiscarder
-      location: 
-        adminAddress: "pavlin.hristov101@gmail.com"
-      pollSCM: 
-        pollingThreadCount: 10
-    
+jenkins:
+  agentProtocols:
+  - "JNLP4-connect"
+  - "Ping"
+  clouds:
+  - docker:
+      dockerApi:
+        connectTimeout: 60
+        dockerHost:
+          uri: "tcp://docker.for.win.localhost:2375"
+        readTimeout: 60
+      name: "LocalDockerHost"
+      templates:
+      - connector: "attach"
+        dockerTemplateBase:
+          image: "rito_project_jenkins-slave"
+        labelString: "testslave"
+        mode: EXCLUSIVE
+        name: "testslave"
+        pullStrategy: PULL_NEVER
+        pullTimeout: 300
+        remoteFs: "/home/jenkins"
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: false
+  disableRememberMe: false
+  labelAtoms:
+  - name: "Jenkins_slave"
+  - name: "master"
+  - name: "testslave"
+  markupFormatter: "plainText"
+  mode: NORMAL
+  myViewsTabBar: "standard"
+  nodes:
+  - permanent:
+      launcher:
+        jnlp:
+          workDirSettings:
+            disabled: false
+            failIfWorkDirIsMissing: false
+            internalDir: "remoting"
+      name: "Jenkins_slave"
+      remoteFS: "/var/jenkins"
+      retentionStrategy: "always"
+  numExecutors: 2
+  primaryView:
+    all:
+      name: "all"
+  projectNamingStrategy: "standard"
+  quietPeriod: 5
+  remotingSecurity:
+    enabled: false
+  scmCheckoutRetryCount: 0
+  slaveAgentPort: 50000
+  updateCenter:
+    sites:
+    - id: "default"
+      url: "https://updates.jenkins.io/update-center.json"
+  views:
+  - all:
+      name: "all"
+  viewsTabBar: "standard"
+security:
+  apiToken:
+    creationOfLegacyTokenEnabled: false
+    tokenGenerationOnCreationEnabled: false
+    usageStatisticsEnabled: true
+  sSHD:
+    port: -1
+unclassified:
+  buildDiscarders:
+    configuredBuildDiscarders:
+    - "jobBuildDiscarder"
+  gitHubPluginConfig:
+    hookUrl: "http://localhost:8080/github-webhook/"
+  gitSCM:
+    createAccountBasedOnEmail: false
+    showEntireCommitSummaryInChanges: false
+    useExistingAccountWithSameEmail: false
+  location:
+    adminAddress: "pavlin.hristov101@gmail.com"
+  mailer:
+    charset: "UTF-8"
+    useSsl: false
+    useTls: false
+  pollSCM:
+    pollingThreadCount: 10
+  prometheusConfiguration:
+    collectingMetricsPeriodInSeconds: 120
+    countAbortedBuilds: true
+    countFailedBuilds: true
+    countNotBuiltBuilds: true
+    countSuccessfulBuilds: true
+    countUnstableBuilds: true
+    defaultNamespace: "default"
+    fetchTestResults: true
+    jobAttributeName: "jenkins_job"
+    path: "prometheus"
+    processingDisabledBuilds: false
+    useAuthenticatedEndpoint: false
+tool:
+  git:
+    installations:
+    - home: "git"
+      name: "Default"

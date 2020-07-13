@@ -5,3 +5,5 @@ durable-task
 docker-plugin
 configuration-as-code
 prometheus
+github
+github-api
