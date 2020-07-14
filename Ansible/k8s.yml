@@ -51,9 +51,9 @@
         state: directory
         mode: '0755'
 
-    - name: Change permitionbs of minikube
-      file:
-        path: /home/ubuntu/.minikube/profiles/minikube/config.json
-        owner: ubuntu
-        mode: '0777'
+    ##- name: Change permitionbs of minikube
+    ##  file:
+    ##    path: /home/ubuntu/.minikube/profiles/minikube/config.json
+    ##    owner: ubuntu
+    ##    mode: '0777'
       
