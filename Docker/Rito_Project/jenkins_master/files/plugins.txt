@@ -7,3 +7,4 @@ configuration-as-code
 prometheus
 github
 github-api
+job-dsl
