@@ -1,7 +1,7 @@
 ## Install Docker ############################################################
 
 ---
-- hosts: web
+- hosts: 127.0.0.1
   become: true
 
   tasks:
@@ -10,7 +10,7 @@
 
     - name: Install required system packages
       apt: name={{ item }} state=latest update_cache=yes
-      loop: [ 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools', 'python-apt']
+      loop: [ 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools', 'python-apt', 'unzip']
 
     - name: Add Docker GPG apt Key
       apt_key:
@@ -35,4 +35,25 @@
         recurse: yes
         owner: ubuntu
         mode: '0007'
-      
+
+## Instal AWS CLI ########################################################
+    - name: Create aws directory
+      file:
+        path: /usr/bin/awscli
+        state: directory
+        mode: '0007'
+
+    - name: Download aws cli
+      get_url:
+        url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+        dest: /usr/bin/awscliv2.zip
+        mode: '0007'
+
+    - name: Extract aws cli into /usr/bin/aws
+      unarchive:
+        src: /usr/bin/awscliv2.zip
+        dest: /usr/bin/awscli
+
+    - name: install aws cli
+      command: /usr/bin/awscli/aws/install
+

@@ -58,6 +58,7 @@ resource "aws_instance" "web" {
       "sleep 5",
       "cd /usr/src/DevOps/Ansible",
       "ansible-playbook master.yml",
+      "/usr/src/DevOps/Docker/test.sh",
       "cd /usr/src/DevOps/Docker/Rito_Project/",
       "sudo docker-compose up -d"
     ]
