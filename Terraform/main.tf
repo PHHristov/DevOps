@@ -43,7 +43,7 @@ resource "aws_instance" "web" {
     source      = "./files/ebsfs.sh"
     destination = "/var/tmp/ebsfs.sh"
   }
-
+   
   provisioner "remote-exec" {
     inline = [
       "cd /usr/src/",
@@ -92,7 +92,8 @@ resource "aws_instance" "Kube" {
       aws_security_group.allow_grafana.id,
       aws_security_group.allow_prometheus.id,
       aws_security_group.allow_cadvisor.id,
-      aws_security_group.allow_node_exporter.id,]
+      aws_security_group.allow_node_exporter.id,
+      aws_security_group.allow_jenkins_slaves.id]
 
   user_data = "sudo apt-get update -y \n apt-get install git-core \n export PATH=/home/ubuntu/.linuxbrew/bin:$PATH"
 
@@ -103,6 +104,11 @@ resource "aws_instance" "Kube" {
   provisioner "file" {
     source      = "./files/k8sUpdate.sh"
     destination = "/var/tmp/k8sUpdate.sh"
+  }
+  
+  provisioner "file" {
+    source      = "./files/agent.jar"
+    destination = "/var/tmp/agent.jar"
   }
 
   provisioner "remote-exec" {
