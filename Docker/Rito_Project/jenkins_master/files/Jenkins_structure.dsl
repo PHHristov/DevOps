@@ -1,6 +1,7 @@
-branch = "master"
 project = "Banichka_s_bozichka"
 repo = "https://github.com/PHHristov/docker-frontend-backend-db"
+branch = "master"
+
 
 //Daily
 folder("Daily") { displayName("Daily") }
