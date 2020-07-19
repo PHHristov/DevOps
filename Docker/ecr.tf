@@ -31,6 +31,14 @@ resource "aws_ecr_repository" "jenkins_nginx_repo" {
     name = "jenkins_nginx_repo"
 }
 
+resource "aws_ecr_repository" "backend" {
+    name = "backend"
+}
+
+resource "aws_ecr_repository" "frontend" {
+    name = "frontend"
+}
+
 output "cadvisor_repo_url" {
     value = aws_ecr_repository.cadvisor_repo.repository_url 
 }
@@ -58,3 +66,12 @@ output "jenkins_nginx_repo_url" {
 output "prometheus_repo_url" {
     value = aws_ecr_repository.prometheus_repo.repository_url 
 }
+
+output "backend" {
+    value = aws_ecr_repository.backend.repository_url 
+}
+
+output "frontend" {
+    value = aws_ecr_repository.frontend.repository_url 
+}
+
