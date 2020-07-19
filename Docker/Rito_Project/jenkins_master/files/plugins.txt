@@ -10,3 +10,4 @@ github-api
 job-dsl
 workflow-aggregator
 workflow-cps
+view-job-filters

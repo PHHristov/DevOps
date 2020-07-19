@@ -74,3 +74,151 @@ listView('1. Daily') {
       	}
     }
 }
+
+// NIghtly 
+
+folder("Nightly") { displayName("Nightly") }
+	folder("Nightly/${project}") {}
+	pipelineJob("Nightly/${project}/build") {
+	    displayName("Build")    	   
+        definition {
+			cpsScm {
+				scm {
+				  git {
+					remote {
+					  url("${repo}")
+					}
+
+					branches("*/${branch}")                    
+					scriptPath("pipeline.jenkinsfile")
+					}          
+				}
+			}
+    	}	
+	}
+	pipelineJob("Nightly/${project}/test") {
+		displayName("Test")    	   
+        definition {
+			cpsScm {
+				scm {
+				  git {
+					remote {
+					  url("${repo}")
+					}
+					branches("*/${branch}")                    
+					scriptPath("pipeline.jenkinsfile")
+					}          
+				}
+			}
+    	}	
+	}
+	pipelineJob("Nightly/${project}/promotion") {
+		displayName("Promotion")    	   
+        definition {
+			cpsScm {
+				scm {
+				  git {
+					remote {
+					  url("${repo}")
+					}
+					branches("*/${branch}")                    
+					scriptPath("pipeline.jenkinsfile")
+					}          
+				}
+			}
+    	}
+	}
+listView('2. Nightly') {
+  	recurse(true)
+	jobFilters {
+      	jobs {
+          	name("Nightly/${project}")
+        }
+    	columns {
+    	    status()
+	        weather()
+    	    name()
+	        lastSuccess()
+    	    lastFailure()
+	        lastDuration()
+    	    buildButton()
+        }
+      	status {
+        	matchType(MatchType.INCLUDE_MATCHED)
+      	}
+    }
+}
+
+// Release 
+
+folder("Release") { displayName("Release") }
+	folder("Release/${project}") {}
+	pipelineJob("Release/${project}/build") {
+	    displayName("Build")    	   
+        definition {
+			cpsScm {
+				scm {
+				  git {
+					remote {
+					  url("${repo}")
+					}
+
+					branches("*/${branch}")                    
+					scriptPath("pipeline.jenkinsfile")
+					}          
+				}
+			}
+    	}	
+	}
+	pipelineJob("Release/${project}/test") {
+		displayName("Test")    	   
+        definition {
+			cpsScm {
+				scm {
+				  git {
+					remote {
+					  url("${repo}")
+					}
+					branches("*/${branch}")                    
+					scriptPath("pipeline.jenkinsfile")
+					}          
+				}
+			}
+    	}	
+	}
+	pipelineJob("Release/${project}/promotion") {
+		displayName("Promotion")    	   
+        definition {
+			cpsScm {
+				scm {
+				  git {
+					remote {
+					  url("${repo}")
+					}
+					branches("*/${branch}")                    
+					scriptPath("pipeline.jenkinsfile")
+					}          
+				}
+			}
+    	}
+	}
+listView('3. Release') {
+  	recurse(true)
+	jobFilters {
+      	jobs {
+          	name("Release/${project}")
+        }
+    	columns {
+    	    status()
+	        weather()
+    	    name()
+	        lastSuccess()
+    	    lastFailure()
+	        lastDuration()
+    	    buildButton()
+        }
+      	status {
+        	matchType(MatchType.INCLUDE_MATCHED)
+      	}
+    }
+}
