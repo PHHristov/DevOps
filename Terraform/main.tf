@@ -26,7 +26,8 @@ resource "aws_instance" "web" {
       aws_security_group.allow_grafana.id,
       aws_security_group.allow_prometheus.id,
       aws_security_group.allow_cadvisor.id,
-      aws_security_group.allow_node_exporter.id,]
+      aws_security_group.allow_node_exporter.id,
+      aws_security_group.allow_jenkins_slaves.id]
 
   user_data = "sudo apt-get update -y \n apt-get install git-core"
 
@@ -42,6 +43,11 @@ resource "aws_instance" "web" {
   provisioner "file" {
     source      = "./files/ebsfs.sh"
     destination = "/var/tmp/ebsfs.sh"
+  }
+
+    provisioner "file" {
+    source      = "./files/agent.jar"
+    destination = "/var/tmp/agent.jar"
   }
    
   provisioner "remote-exec" {
@@ -60,7 +66,8 @@ resource "aws_instance" "web" {
       "ansible-playbook master.yml",
       "sudo /usr/src/DevOps/Docker/ecr-login.sh",
       "cd /usr/src/DevOps/Docker/Rito_Project/",
-      "sudo docker-compose up -d"
+      "sudo docker-compose up -d",
+      "sudo chmod +x /var/tmp/agent.jar"
     ]
   }
 
@@ -124,7 +131,8 @@ resource "aws_instance" "Kube" {
       #"sudo ./ebsfs.sh",
       "sleep 5",
       "cd /usr/src/DevOps/Ansible",
-      "ansible-playbook k8s.yml"     
+      "ansible-playbook k8s.yml",
+      "sudo chmod +x /var/tmp/agent.jar"     
       
     ]
   }
