@@ -8,3 +8,5 @@ prometheus
 github
 github-api
 job-dsl
+workflow-aggregator
+workflow-cps
