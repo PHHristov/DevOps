@@ -165,7 +165,7 @@ folder("Release") { displayName("Release") }
 					}
 
 					branches("*/${branch}")                    
-					scriptPath("pipeline.jenkinsfile")
+					scriptPath("k8s.jenkinsfile")
 					}          
 				}
 			}
@@ -181,7 +181,7 @@ folder("Release") { displayName("Release") }
 					  url("${repo}")
 					}
 					branches("*/${branch}")                    
-					scriptPath("pipeline.jenkinsfile")
+					scriptPath("k8s.jenkinsfile")
 					}          
 				}
 			}
@@ -197,7 +197,7 @@ folder("Release") { displayName("Release") }
 					  url("${repo}")
 					}
 					branches("*/${branch}")                    
-					scriptPath("pipeline.jenkinsfile")
+					scriptPath("k8s.jenkinsfile")
 					}          
 				}
 			}
