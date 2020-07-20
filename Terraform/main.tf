@@ -14,7 +14,7 @@ resource "aws_key_pair" "mykey" {
 
 resource "aws_instance" "web" {
   ami                         = var.AMIS[var.AWS_REGION]
-  instance_type               = "t2.micro"
+  instance_type               = "t2.medium"
   key_name                    = aws_key_pair.mykey.key_name
   associate_public_ip_address = true
   ## VPC Subnet 
@@ -27,7 +27,8 @@ resource "aws_instance" "web" {
       aws_security_group.allow_prometheus.id,
       aws_security_group.allow_cadvisor.id,
       aws_security_group.allow_node_exporter.id,
-      aws_security_group.allow_jenkins_slaves.id]
+      aws_security_group.allow_jenkins_slaves.id,
+      aws_security_group.allow_web.id]
 
   user_data = "sudo apt-get update -y \n apt-get install git-core"
 
@@ -67,7 +68,10 @@ resource "aws_instance" "web" {
       "sudo /usr/src/DevOps/Docker/ecr-login.sh",
       "cd /usr/src/DevOps/Docker/Rito_Project/",
       "sudo docker-compose up -d",
-      "sudo chmod +x /var/tmp/agent.jar"
+      "sudo chmod +x /var/tmp/agent.jar",
+      #"sleep 120", ## wait for jenkins to run in order to get connected
+      "sudo java -jar /var/tmp/agent.jar -jnlpUrl http://localhost:8080/computer/Jenkins_slave/slave-agent.jnlp -workDir /var/jenkins &"
+      
     ]
   }
 
