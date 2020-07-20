@@ -26,7 +26,9 @@ jenkins:
   disableRememberMe: false
   labelAtoms:
   - name: "Jenkins_slave"
+  - name: "MiniKube_Master"
   - name: "master"
+  - name: "minikube"
   - name: "testslave"
   markupFormatter: "plainText"
   mode: NORMAL
@@ -40,6 +42,18 @@ jenkins:
             failIfWorkDirIsMissing: false
             internalDir: "remoting"
       name: "Jenkins_slave"
+      remoteFS: "/var/jenkins"
+      retentionStrategy: "always"
+  - permanent:
+      labelString: "minikube"
+      launcher:
+        jnlp:
+          workDirSettings:
+            disabled: false
+            failIfWorkDirIsMissing: false
+            internalDir: "remoting"
+      mode: EXCLUSIVE
+      name: "MiniKube_Master"
       remoteFS: "/var/jenkins"
       retentionStrategy: "always"
   numExecutors: 2
@@ -65,12 +79,18 @@ security:
     creationOfLegacyTokenEnabled: false
     tokenGenerationOnCreationEnabled: false
     usageStatisticsEnabled: true
+  globalJobDslSecurityConfiguration:
+    useScriptSecurity: true
   sSHD:
     port: -1
 unclassified:
   buildDiscarders:
     configuredBuildDiscarders:
     - "jobBuildDiscarder"
+  defaultFolderConfiguration:
+    healthMetrics:
+    - worstChildHealthMetric:
+        recursive: true
   gitHubPluginConfig:
     hookUrl: "http://localhost:8080/github-webhook/"
   gitSCM:
