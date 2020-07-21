@@ -137,8 +137,7 @@ resource "aws_instance" "Kube" {
       "sleep 5",
       "cd /usr/src/DevOps/Ansible",
       "ansible-playbook k8s.yml",
-      "sudo chmod +x /var/tmp/agent.jar", 
-      "sudo usermod -aG docker ubuntu && newgrp docker" // takes too long, has to be interupted, have to check why.
+      "sudo chmod +x /var/tmp/agent.jar"
       
     ]
   }
