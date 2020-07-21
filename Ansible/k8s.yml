@@ -71,10 +71,17 @@
 
     - name: install aws cli
       command: /usr/bin/awscli/aws/install
+## chmod ubuntu #########################################################
 
-      
+    - name: change grp
+      command: usermod -aG docker ubuntu
 
+    - name: new grp
+      command: newgrp docker
 
+## Start minikube ######################################################
 
-
-
+    - name: start minikube
+      remote_user: ubuntu
+      command: minikube start --driver=none
+    
