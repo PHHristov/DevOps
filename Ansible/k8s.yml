@@ -83,5 +83,5 @@
 
     - name: start minikube
       remote_user: ubuntu
-      command: minikube start --driver=none
+      command: minikube start --driver=docker
     
