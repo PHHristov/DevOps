@@ -104,7 +104,8 @@ resource "aws_instance" "Kube" {
       aws_security_group.allow_prometheus.id,
       aws_security_group.allow_cadvisor.id,
       aws_security_group.allow_node_exporter.id,
-      aws_security_group.allow_jenkins_slaves.id]
+      aws_security_group.allow_jenkins_slaves.id,
+      aws_security_group.allow_web.id]
 
   user_data = "sudo apt-get update -y \n apt-get install git-core \n export PATH=/home/ubuntu/.linuxbrew/bin:$PATH"
 
@@ -136,7 +137,8 @@ resource "aws_instance" "Kube" {
       "sleep 5",
       "cd /usr/src/DevOps/Ansible",
       "ansible-playbook k8s.yml",
-      "sudo chmod +x /var/tmp/agent.jar"     
+      "sudo chmod +x /var/tmp/agent.jar", 
+      "sudo usermod -aG docker ubuntu && newgrp docker" // takes too long, has to be interupted, have to check why.
       
     ]
   }
