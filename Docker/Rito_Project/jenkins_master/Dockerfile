@@ -6,6 +6,7 @@ ENV CASC_JENKINS_CONFIG="/var/jenkins_home/casc_configs"
 USER root
 
 RUN mkdir /var/log/jenkins                                               && \
+mkdir -p /var/jenkins_home/workspace/seed                                && \
 mkdir /var/cache/jenkins                                                 && \
 mkdir /var/jenkins_home/casc_configs                                     && \
 chown -R jenkins:jenkins /var/log/jenkins                                && \
@@ -20,4 +21,5 @@ COPY ./files/jenkins.sh /usr/local/bin/jenkins.sh
 COPY ./files/jenkins-support /usr/local/bin/jenkins-support
 COPY ./files/init.groovy /usr/local/bin/init.groovy
 COPY ./files/Jenkins_CaaC.yml /var/jenkins_home/casc_configs/Jenkins_CaaC.yml
+COPY ./files/Jenkins_structure.dsl /var/tmp/Jenkins_structure.dsl
 RUN /usr/local/bin/install-plugins.sh < /tmp/plugins.txt
