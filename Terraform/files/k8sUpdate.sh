@@ -14,5 +14,5 @@ sudo curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/m
 curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.16.8/2020-04-16/bin/linux/amd64/kubectl
 sudo mkdir -p /usr/local/bin/
 sudo install minikube /usr/local/bin/
-systemctl enable kubelet.service
+sudo systemctl enable kubelet.service
 
