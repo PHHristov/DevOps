@@ -70,7 +70,7 @@
         dest: /usr/bin/awscli
 
     - name: install aws cli
-      command: /usr/bin/awscli/aws/install
+      command: /usr/bin/awscli/aws/install --update
 ## chmod ubuntu #########################################################
 
     - name: change grp
@@ -79,9 +79,4 @@
     - name: new grp
       command: newgrp docker
 
-## Start minikube ######################################################
-
-    - name: start minikube
-      remote_user: ubuntu
-      command: minikube start --driver=docker
     
