@@ -1,4 +1,4 @@
-project = "Banichka_s_bozichka"
+project = "DraftKings alabala"
 repo = "https://github.com/PHHristov/docker-frontend-backend-db"
 branch = "master"
 
@@ -49,7 +49,7 @@ folder("Daily") { displayName("Daily") }
 					  url("${repo}")
 					}
 					branches("*/${branch}")                    
-					scriptPath("pipeline.jenkinsfile")
+					scriptPath("k8s.jenkinsfile")
 					}          
 				}
 			}
