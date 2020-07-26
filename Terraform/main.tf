@@ -136,9 +136,7 @@ resource "aws_instance" "Kube" {
       "sleep 5",
       "cd /usr/src/DevOps/Ansible",
       "ansible-playbook k8s.yml",
-      "sudo chmod +x /var/tmp/agent.jar",
-      "cd /usr/src/DevOps/Terraform/files",
-      "sudo ./k8sUpdate.sh"
+      "sudo chmod +x /var/tmp/agent.jar"      
     ]
   }
 
