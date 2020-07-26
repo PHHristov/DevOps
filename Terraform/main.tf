@@ -69,7 +69,6 @@ resource "aws_instance" "web" {
       "cd /usr/src/DevOps/Docker/Rito_Project/",
       "sudo docker-compose up -d",
       "sudo chmod +x /var/tmp/agent.jar",
-      #"sleep 120", ## wait for jenkins to run in order to get connected
       "sudo java -jar /var/tmp/agent.jar -jnlpUrl http://localhost:8080/computer/Jenkins_slave/slave-agent.jnlp -workDir /var/jenkins &"
       
     ]
@@ -137,8 +136,9 @@ resource "aws_instance" "Kube" {
       "sleep 5",
       "cd /usr/src/DevOps/Ansible",
       "ansible-playbook k8s.yml",
-      "sudo chmod +x /var/tmp/agent.jar"
-      
+      "sudo chmod +x /var/tmp/agent.jar",
+      "cd /usr/src/DevOps/Terraform/files",
+      "sudo ./k8sUpdate.sh"
     ]
   }
 
