@@ -33,7 +33,7 @@ resource "aws_instance" "web" {
   user_data = "sudo apt-get update -y \n apt-get install git-core"
 
   tags = {
-    Name = "olala_danette"
+    Name = "Jenkins_Master"
   }
 
   provisioner "file" {
@@ -109,7 +109,7 @@ resource "aws_instance" "Kube" {
   user_data = "sudo apt-get update -y \n apt-get install git-core \n export PATH=/home/ubuntu/.linuxbrew/bin:$PATH"
 
   tags = {
-    Name = "k8s"
+    Name = "Kubernetes"
   }
 
   provisioner "file" {
@@ -120,6 +120,11 @@ resource "aws_instance" "Kube" {
   provisioner "file" {
     source      = "./files/agent.jar"
     destination = "/var/tmp/agent.jar"
+  }
+
+  provisioner "file" {
+    source      = "./files/login.sh"
+    destination = "/var/tmp/login.sh"
   }
 
   provisioner "remote-exec" {
@@ -136,7 +141,8 @@ resource "aws_instance" "Kube" {
       "sleep 5",
       "cd /usr/src/DevOps/Ansible",
       "ansible-playbook k8s.yml",
-      "sudo chmod +x /var/tmp/agent.jar"      
+      "sudo chmod +x /var/tmp/agent.jar",
+      "/var/tmp/login.sh"
     ]
   }
 
