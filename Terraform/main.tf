@@ -142,7 +142,7 @@ resource "aws_instance" "Kube" {
       "cd /usr/src/DevOps/Ansible",
       "ansible-playbook k8s.yml",
       "sudo chmod +x /var/tmp/agent.jar",
-      "/var/tmp/login.sh"
+      "sudo chmod +x /var/tmp/login.sh"
     ]
   }
 
