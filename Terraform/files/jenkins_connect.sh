@@ -1,0 +1,1 @@
+sudo java -jar /var/tmp/agent.jar -jnlpUrl http://localhost:8080/computer/Jenkins_slave/slave-agent.jnlp -workDir "/var/jenkins" &

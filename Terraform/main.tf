@@ -46,9 +46,14 @@ resource "aws_instance" "web" {
     destination = "/var/tmp/ebsfs.sh"
   }
 
-    provisioner "file" {
+  provisioner "file" {
     source      = "./files/agent.jar"
     destination = "/var/tmp/agent.jar"
+  }
+
+  provisioner "file" {
+    source      = "./files/jenkins_connect.sh"
+    destination = "/var/tmp/jenkins_connect.sh"
   }
    
   provisioner "remote-exec" {
@@ -69,7 +74,7 @@ resource "aws_instance" "web" {
       "cd /usr/src/DevOps/Docker/Rito_Project/",
       "sudo docker-compose up -d",
       "sudo chmod +x /var/tmp/agent.jar",
-      "sudo java -jar /var/tmp/agent.jar -jnlpUrl http://localhost:8080/computer/Jenkins_slave/slave-agent.jnlp -workDir /var/jenkins &"
+      "sudo chmod 777 /var/tmp/jenkins_connect.sh"
       
     ]
   }
